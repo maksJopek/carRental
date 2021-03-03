@@ -8,7 +8,7 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { component } from "vue/types/umd";
 import CarItem from "./components/CarItem.vue";
-// very important commne
+
 @Component({
 	components: {
 		CarItem,
