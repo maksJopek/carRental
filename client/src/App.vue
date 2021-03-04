@@ -15,7 +15,7 @@ import CarItem from "./components/CarItem.vue";
 })
 export default class App extends Vue {
 	private gotData = false;
-	private avaibleCars: Array<object>;
+	private avaibleCars!: Array<object>;
 	async mounted() {
 		this.avaibleCars = await (
 			await fetch("http://localhost:8081/getCars")

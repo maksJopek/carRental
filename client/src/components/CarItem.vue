@@ -28,12 +28,12 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component
 export default class CarItem extends Vue {
-	@Prop({ required: true }) readonly id: number;
-	@Prop({ required: true }) readonly name: string;
-	@Prop({ required: true }) readonly year: number;
-	@Prop({ required: true }) readonly price: number;
+	@Prop({ required: true }) readonly id!: number;
+	@Prop({ required: true }) readonly name!: string;
+	@Prop({ required: true }) readonly year!: number;
+	@Prop({ required: true }) readonly price!: number;
 	@Prop({ required: true }) readonly photoUrl!: string;
-	@Prop({ required: true }) readonly equipment: string;
+	@Prop({ required: true }) readonly equipment!: string;
 	@Prop({ required: true }) readonly rented!: boolean;
 	private dbError = false;
 	private gotRented = false;
