@@ -19,8 +19,8 @@ async function getDataFromDb(whatToDo: number, id = 0) {
 		query;
 
 	if (whatToDo === 1) query = "SELECT * FROM cars";
-	/* if (whatToDo === 2) */ else
-		query = "UPDATE `cars` SET `rented`=true WHERE `id`=" + id;
+	//if (whatToDo === 2)
+	else query = "UPDATE `cars` SET `rented`=true WHERE `id`=" + id;
 
 	out = conn.query(query);
 	if (conn) conn.end();

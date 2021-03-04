@@ -1,9 +1,7 @@
 <template>
 	<div class="car">
 		<div class="carName alignCenter">
-			<p>
-				{{ name }}
-			</p>
+			<p>{{ name }}</p>
 		</div>
 		<div class="carPhoto" :style="css"></div>
 		<div class="carProps">
@@ -20,9 +18,7 @@
 			</p>
 			<p v-else-if="gotRented">Samochód został wypożyczony</p>
 			<p v-else-if="rented">Ten samochód jest właśnie wypożyczony</p>
-			<button @click="carRent" v-else>
-				Wypożycz ten samochód
-			</button>
+			<button @click="carRent" v-else>Wypożycz ten samochód</button>
 		</div>
 	</div>
 </template>

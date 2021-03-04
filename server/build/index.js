@@ -21,7 +21,8 @@ async function getDataFromDb(whatToDo, id = 0) {
     let conn = await pool.getConnection(), out, query;
     if (whatToDo === 1)
         query = "SELECT * FROM cars";
-    /* if (whatToDo === 2) */ else
+    //if (whatToDo === 2)
+    else
         query = "UPDATE `cars` SET `rented`=true WHERE `id`=" + id;
     out = conn.query(query);
     if (conn)
