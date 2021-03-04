@@ -1,7 +1,23 @@
 import express from "express";
-// rest of the code remains same
+import { Sequelize } from "sequelize";
+import dbConfig from "./dbConfig";
 const app = express();
 const PORT = 8081;
+
+// const Sequelize = require("sequelize");
+const sequelize = new Sequelize(
+	`${dbConfig.dialect}://${dbConfig.user}:${dbConfig.password}@${dbConfig.host}/${dbConfig.db}`
+);
+
+sequelize
+	.authenticate()
+	.then(() => {
+		console.log("Connection has been established successfully.");
+	})
+	.catch((err) => {
+		console.error("Unable to connect to the database:", err);
+	});
+
 app.get("/", (req, res) => res.send("Express + TypeScript Server"));
 app.get("/getCars", (req, res) => {
 	res.setHeader("Access-Control-Allow-Origin", "*");
