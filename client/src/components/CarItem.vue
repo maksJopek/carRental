@@ -1,11 +1,11 @@
 <template>
 	<div class="car">
-		<div class="carName">
+		<div class="carName alignCenter">
 			<p>
 				{{ name }}
 			</p>
 		</div>
-		<div class="carPhoto" :style="cssProps"></div>
+		<div class="carPhoto" :style="css"></div>
 		<div class="carProps">
 			<ul>
 				<li>Rocznik: {{ year }}</li>
@@ -13,16 +13,22 @@
 				<li>Wyposażenie: {{ equipment }}</li>
 			</ul>
 		</div>
-		<div class="carRent">
-			<button @click="carRent" v-if="!rentedNow">Wypożycz ten samochód</button>
-			<div v-else>Ten samochód jest właśnie wypożyczony</div>
+		<div class="carRent alignCenter">
+			<p v-if="dbError">
+				Wystąpił błąd w trakcie wypożyczania samochodu, zgłoś się do
+				administratora strony
+			</p>
+			<p v-else-if="gotRented">Samochód został wypożyczony</p>
+			<p v-else-if="rented">Ten samochód jest właśnie wypożyczony</p>
+			<button @click="carRent" v-else>
+				Wypożycz ten samochód
+			</button>
 		</div>
 	</div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-// import { component } from "vue/types/umd";
 
 @Component
 export default class CarItem extends Vue {
@@ -30,34 +36,37 @@ export default class CarItem extends Vue {
 	@Prop({ required: true }) readonly name: string;
 	@Prop({ required: true }) readonly year: number;
 	@Prop({ required: true }) readonly price: number;
-	@Prop({ required: true }) readonly photoUrl: string;
+	@Prop({ required: true }) readonly photoUrl!: string;
 	@Prop({ required: true }) readonly equipment: string;
 	@Prop({ required: true }) readonly rented!: boolean;
-	private rentedNow = this.rented;
-	get cssProps(): object {
-		return {
-			"background-image": `url(${this.photoUrl})`,
-		};
-	}
+	private dbError = false;
+	private gotRented = false;
+	private css = { "background-image": `url(${this.photoUrl})` };
 	async carRent() {
 		let res = await fetch("http://localhost:8081/rentCar", {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({ id: this.id }),
 		});
-		if (res.status === 204) this.rentedNow = true;
+		if (res.status === 204) this.gotRented = true;
+		else this.dbError = true;
 	}
 }
 </script>
 
 <style scoped>
+.alignCenter {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
 .car {
-	width: 90%;
-	height: 8vh;
+	height: 12vh;
 	border: 1px solid green;
+	margin: 0 auto;
 }
 .car div {
-	height: 8vh;
+	height: 12vh;
 	float: left;
 }
 .carName {
@@ -69,16 +78,19 @@ export default class CarItem extends Vue {
 	background-size: 100% 100%;
 }
 .carProps {
+	display: flex;
+	align-items: center;
+	text-align: left;
 	width: 40%;
-}
-.carProps ul {
-	columns: 2;
 	font-size: 15px;
 }
 .carRent {
-	display: flex;
-	align-items: center;
-	text-align: center;
 	width: 20%;
+}
+.carRent button {
+	background-color: cadetblue;
+	padding: 20px;
+	border-radius: 10px;
+	border: 1px solid blue;
 }
 </style>
