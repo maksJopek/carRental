@@ -1,6 +1,6 @@
 <template>
 	<div id="app" v-if="gotData">
-		<CarItem v-for="car in avaibleCars" v-bind="car" :key="car.key" />
+		<CarItem v-for="car in avaibleCars" v-bind="car" :key="car.id" />
 	</div>
 </template>
 
@@ -32,13 +32,11 @@ export default class App extends Vue {
 #app {
 	width: 70%;
 	margin: 5px auto;
-
-	/* font-family: Avenir, Helvetica, Arial, sans-serif;
+	font-family: Avenir, Helvetica, Arial, sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	text-align: center;
 	color: #2c3e50;
-	margin-top: 60px; */
 }
 #car {
 	border: 1px solid black;

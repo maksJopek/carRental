@@ -14,7 +14,8 @@
 			</ul>
 		</div>
 		<div class="carRent">
-			<button @click="carRent">Wypożycz ten samochód</button>
+			<button @click="carRent" v-if="!rentedNow">Wypożycz ten samochód</button>
+			<div v-else>Ten samochód jest właśnie wypożyczony</div>
 		</div>
 	</div>
 </template>
@@ -25,19 +26,26 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component
 export default class CarItem extends Vue {
-	@Prop({ required: true }) readonly name!: string;
-	@Prop({ required: true }) readonly year!: number;
-	@Prop({ required: true }) readonly price!: number;
-	@Prop({ required: true }) readonly photoUrl!: string;
-	@Prop({ required: true }) readonly equipment!: string;
-
+	@Prop({ required: true }) readonly id: number;
+	@Prop({ required: true }) readonly name: string;
+	@Prop({ required: true }) readonly year: number;
+	@Prop({ required: true }) readonly price: number;
+	@Prop({ required: true }) readonly photoUrl: string;
+	@Prop({ required: true }) readonly equipment: string;
+	@Prop({ required: true }) readonly rented!: boolean;
+	private rentedNow = this.rented;
 	get cssProps(): object {
 		return {
 			"background-image": `url(${this.photoUrl})`,
 		};
 	}
 	async carRent() {
-		return;
+		let res = await fetch("http://localhost:8081/rentCar", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ id: this.id }),
+		});
+		if (res.status === 204) this.rentedNow = true;
 	}
 }
 </script>
