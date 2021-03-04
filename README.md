@@ -1,19 +1,21 @@
 # car-rental
 
-## Project setup
-```
-yarn install
-```
+### Project setup
 
-### Compiles and hot-reloads for development
+To start fronted server run
+
 ```
 yarn serve
 ```
 
-### Compiles and minifies for production
+inside /client
+
+To start backend run
+
 ```
-yarn build
+yarn start
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+inisde /server
+
+See [Configuration Reference](https://cli.vuejs.org/config/) for frontend.
