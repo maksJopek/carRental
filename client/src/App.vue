@@ -16,19 +16,15 @@ import CarItem from "./components/CarItem.vue";
 })
 export default class App extends Vue {
 	private gotData = false;
-	private avaibleCars = ((): Array<object> => {
-		this.gotData = true;
-		return [
-			{
-				name: "Opel Astra",
-				year: 2004,
-				price: 500,
-				photoUrl: "https://jopek.eu/opelAstra",
-				equipment: "klimatyzacja, czujnik parkowania",
-				key: 0,
-			},
-		];
-	})();
+	private avaibleCars!: Array<object>;
+	mounted() {
+		(async () => {
+			let cars;
+			cars = await (await fetch("http://localhost:8081/getCars")).json();
+			this.avaibleCars = cars;
+			this.gotData = true;
+		})();
+	}
 }
 </script>
 
